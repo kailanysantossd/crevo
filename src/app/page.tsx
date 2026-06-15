@@ -1,25 +1,22 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { Logo } from "@/components/logo";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center bg-background p-8 overflow-hidden">
       <div
-        className="absolute inset-0 -z-10 opacity-40"
+        className="absolute inset-0 -z-10 opacity-50"
         style={{
           background:
-            "radial-gradient(ellipse at top, oklch(0.7 0.2 290 / 0.25), transparent 50%), radial-gradient(ellipse at bottom right, oklch(0.7 0.18 320 / 0.2), transparent 50%)",
+            "radial-gradient(ellipse at top, oklch(0.76 0.12 190 / 0.18), transparent 55%), radial-gradient(ellipse at bottom right, oklch(0.31 0.06 250 / 0.15), transparent 55%)",
         }}
         aria-hidden
       />
 
       <div className="max-w-md text-center space-y-8 relative">
         <div className="space-y-3">
-          <h1 className="text-7xl font-bold tracking-tight">
-            <span className="bg-gradient-to-br from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
-              crevo
-            </span>
-          </h1>
+          <Logo size="xl" />
           <p className="text-muted-foreground text-lg">
             Gestão de campanhas publicitárias
           </p>

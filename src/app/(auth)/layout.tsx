@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 export default function AuthLayout({
   children,
@@ -8,21 +9,17 @@ export default function AuthLayout({
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center bg-background p-6 overflow-hidden">
       <div
-        className="absolute inset-0 -z-10 opacity-30"
+        className="absolute inset-0 -z-10 opacity-40"
         style={{
           background:
-            "radial-gradient(ellipse at top, oklch(0.7 0.2 290 / 0.3), transparent 60%)",
+            "radial-gradient(ellipse at top, oklch(0.76 0.12 190 / 0.2), transparent 60%)",
         }}
         aria-hidden
       />
       <div className="w-full max-w-sm space-y-6 relative">
-        <Link href="/" className="block text-center">
-          <h1 className="text-5xl font-bold tracking-tight">
-            <span className="bg-gradient-to-br from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
-              crevo
-            </span>
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
+        <Link href="/" className="block text-center space-y-1">
+          <Logo size="lg" />
+          <p className="text-sm text-muted-foreground">
             Gestão de campanhas publicitárias
           </p>
         </Link>
