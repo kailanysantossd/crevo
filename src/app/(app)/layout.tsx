@@ -41,8 +41,12 @@ export default async function AppLayout({
       <header className="sticky top-0 z-10 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
           <Link href="/dashboard" className="flex items-baseline gap-2">
-            <span className="text-xl font-bold tracking-tight">crevo</span>
-            <span className="text-xs text-zinc-400 hidden sm:inline">MVP</span>
+            <span className="text-xl font-bold tracking-tight bg-gradient-to-br from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
+              crevo
+            </span>
+            <span className="text-xs text-muted-foreground hidden sm:inline">
+              MVP
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
