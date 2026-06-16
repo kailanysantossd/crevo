@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Card, CardContent } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -9,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PerfilSelect } from "./_perfil-select";
+import { ConvitesPendentes } from "./_convites-pendentes";
 import type { PerfilUsuario } from "./actions";
 
 export default async function UsuariosPage() {
@@ -17,25 +20,39 @@ export default async function UsuariosPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: usuarios } = await supabase
-    .from("profiles")
-    .select("id, nome, email, perfil, created_at")
-    .order("created_at", { ascending: false });
+  const [{ data: usuarios }, { data: convites }] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("id, nome, email, perfil, created_at")
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("convites")
+      .select("id, token, email, perfil, created_at, expira_em, cliente:clientes(nome)")
+      .is("aceito_em", null)
+      .gt("expira_em", new Date().toISOString())
+      .order("created_at", { ascending: false }),
+  ]);
 
   const count = usuarios?.length ?? 0;
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Usuários</h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          {count} usuário{count === 1 ? "" : "s"} cadastrado
-          {count === 1 ? "" : "s"} · Cadastros são feitos pela tela de criar
-          conta
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Usuários</h1>
+          <p className="text-sm text-muted-foreground">
+            {count} pessoa{count === 1 ? "" : "s"} na sua agência
+          </p>
+        </div>
+        <Link href="/usuarios/convidar" className={buttonVariants()}>
+          Convidar pessoa
+        </Link>
       </div>
 
       <Card>
+        <CardHeader>
+          <CardTitle>Pessoas com acesso</CardTitle>
+        </CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
@@ -51,12 +68,12 @@ export default async function UsuariosPage() {
                   <TableCell className="font-medium">
                     {u.nome}
                     {u.id === user?.id && (
-                      <span className="ml-2 text-xs text-zinc-500">
+                      <span className="ml-2 text-xs text-muted-foreground">
                         (você)
                       </span>
                     )}
                   </TableCell>
-                  <TableCell className="text-zinc-600 dark:text-zinc-400">
+                  <TableCell className="text-muted-foreground">
                     {u.email}
                   </TableCell>
                   <TableCell>
@@ -72,6 +89,10 @@ export default async function UsuariosPage() {
           </Table>
         </CardContent>
       </Card>
+
+      {convites && convites.length > 0 && (
+        <ConvitesPendentes convites={convites} />
+      )}
     </div>
   );
 }

@@ -26,7 +26,21 @@ export async function createCliente(
   if (!payload.nome) return { error: "Nome é obrigatório." };
 
   const supabase = await createClient();
-  const { error } = await supabase.from("clientes").insert(payload);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { error: "Sessão expirada." };
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("agencia_id")
+    .eq("id", user.id)
+    .maybeSingle();
+  if (!profile?.agencia_id) return { error: "Perfil sem agência vinculada." };
+
+  const { error } = await supabase
+    .from("clientes")
+    .insert({ ...payload, owner_id: profile.agencia_id });
   if (error) return { error: error.message };
 
   revalidatePath("/clientes");
