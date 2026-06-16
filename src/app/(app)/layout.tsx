@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { href: "/projetos", label: "Projetos" },
   { href: "/campanhas", label: "Campanhas" },
   { href: "/tarefas", label: "Tarefas" },
+  { href: "/cronograma", label: "Cronograma" },
   { href: "/usuarios", label: "Usuários" },
 ];
 
