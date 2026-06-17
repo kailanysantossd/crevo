@@ -13,18 +13,46 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { login, type LoginState } from "./actions";
+import { recuperarSenha, type RecuperarSenhaState } from "./actions";
 
-const initialState: LoginState = {};
+const initialState: RecuperarSenhaState = {};
 
-export default function LoginPage() {
-  const [state, formAction, pending] = useActionState(login, initialState);
+export default function RecuperarSenhaPage() {
+  const [state, formAction, pending] = useActionState(
+    recuperarSenha,
+    initialState
+  );
+
+  if (state.ok) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Verifique seu e-mail</CardTitle>
+          <CardDescription>
+            Se a conta existir, enviamos um link para redefinir a senha. Pode
+            demorar alguns minutos para chegar — confira também a pasta de
+            spam.
+          </CardDescription>
+        </CardHeader>
+        <CardFooter>
+          <Link
+            href="/login"
+            className="text-sm text-zinc-500 dark:text-zinc-400 hover:underline"
+          >
+            Voltar para o login
+          </Link>
+        </CardFooter>
+      </Card>
+    );
+  }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Entrar</CardTitle>
-        <CardDescription>Acesse sua conta para continuar</CardDescription>
+        <CardTitle>Esqueci minha senha</CardTitle>
+        <CardDescription>
+          Informe seu e-mail que enviamos um link para redefinir a senha
+        </CardDescription>
       </CardHeader>
       <form action={formAction}>
         <CardContent className="space-y-4">
@@ -39,24 +67,6 @@ export default function LoginPage() {
               required
             />
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Senha</Label>
-              <Link
-                href="/recuperar-senha"
-                className="text-xs text-zinc-500 dark:text-zinc-400 hover:underline"
-              >
-                Esqueci a senha
-              </Link>
-            </div>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-            />
-          </div>
           {state.error && (
             <p className="text-sm text-red-600 dark:text-red-400">
               {state.error}
@@ -65,15 +75,15 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex flex-col gap-3 mt-6">
           <Button type="submit" className="w-full" disabled={pending}>
-            {pending ? "Entrando..." : "Entrar"}
+            {pending ? "Enviando..." : "Enviar link"}
           </Button>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 text-center">
-            Não tem conta?{" "}
+            Lembrou da senha?{" "}
             <Link
-              href="/signup"
+              href="/login"
               className="font-medium text-zinc-900 dark:text-zinc-50 underline-offset-4 hover:underline"
             >
-              Cadastrar
+              Voltar para o login
             </Link>
           </p>
         </CardFooter>

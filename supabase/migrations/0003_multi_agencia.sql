@@ -125,6 +125,8 @@ $$;
 drop policy if exists "profiles_select_authenticated" on public.profiles;
 drop policy if exists "profiles_update_own"           on public.profiles;
 drop policy if exists "profiles_admin_all"            on public.profiles;
+drop policy if exists "profiles_same_agencia_read"    on public.profiles;
+drop policy if exists "profiles_admin_same_agencia"   on public.profiles;
 
 create policy "profiles_same_agencia_read"
   on public.profiles for select
@@ -145,8 +147,9 @@ create policy "profiles_admin_same_agencia"
 
 
 -- ---- clientes -------------------------------------------------------------
-drop policy if exists "clientes_staff_all"     on public.clientes;
-drop policy if exists "clientes_cliente_read"  on public.clientes;
+drop policy if exists "clientes_staff_all"           on public.clientes;
+drop policy if exists "clientes_cliente_read"        on public.clientes;
+drop policy if exists "clientes_staff_same_agencia"  on public.clientes;
 
 create policy "clientes_staff_same_agencia"
   on public.clientes for all
@@ -167,8 +170,9 @@ create policy "clientes_cliente_read"
 
 
 -- ---- clientes_usuarios ----------------------------------------------------
-drop policy if exists "clientes_usuarios_staff_all"   on public.clientes_usuarios;
-drop policy if exists "clientes_usuarios_self_read"   on public.clientes_usuarios;
+drop policy if exists "clientes_usuarios_staff_all"           on public.clientes_usuarios;
+drop policy if exists "clientes_usuarios_self_read"           on public.clientes_usuarios;
+drop policy if exists "clientes_usuarios_staff_same_agencia"  on public.clientes_usuarios;
 
 create policy "clientes_usuarios_staff_same_agencia"
   on public.clientes_usuarios for all
@@ -197,8 +201,9 @@ create policy "clientes_usuarios_self_read"
 
 
 -- ---- projetos -------------------------------------------------------------
-drop policy if exists "projetos_staff_all"      on public.projetos;
-drop policy if exists "projetos_cliente_read"   on public.projetos;
+drop policy if exists "projetos_staff_all"           on public.projetos;
+drop policy if exists "projetos_cliente_read"        on public.projetos;
+drop policy if exists "projetos_staff_same_agencia"  on public.projetos;
 
 create policy "projetos_staff_same_agencia"
   on public.projetos for all
@@ -227,8 +232,9 @@ create policy "projetos_cliente_read"
 
 
 -- ---- campanhas ------------------------------------------------------------
-drop policy if exists "campanhas_staff_all"     on public.campanhas;
-drop policy if exists "campanhas_cliente_read"  on public.campanhas;
+drop policy if exists "campanhas_staff_all"           on public.campanhas;
+drop policy if exists "campanhas_cliente_read"        on public.campanhas;
+drop policy if exists "campanhas_staff_same_agencia"  on public.campanhas;
 
 create policy "campanhas_staff_same_agencia"
   on public.campanhas for all
@@ -265,8 +271,9 @@ create policy "campanhas_cliente_read"
 
 
 -- ---- briefings ------------------------------------------------------------
-drop policy if exists "briefings_staff_all"     on public.briefings;
-drop policy if exists "briefings_cliente_read"  on public.briefings;
+drop policy if exists "briefings_staff_all"           on public.briefings;
+drop policy if exists "briefings_cliente_read"        on public.briefings;
+drop policy if exists "briefings_staff_same_agencia"  on public.briefings;
 
 create policy "briefings_staff_same_agencia"
   on public.briefings for all
@@ -306,7 +313,8 @@ create policy "briefings_cliente_read"
 
 
 -- ---- tarefas --------------------------------------------------------------
-drop policy if exists "tarefas_staff_all" on public.tarefas;
+drop policy if exists "tarefas_staff_all"           on public.tarefas;
+drop policy if exists "tarefas_staff_same_agencia"  on public.tarefas;
 
 create policy "tarefas_staff_same_agencia"
   on public.tarefas for all
@@ -334,8 +342,9 @@ create policy "tarefas_staff_same_agencia"
 
 
 -- ---- checklist_itens ------------------------------------------------------
-drop policy if exists "checklist_staff_all"     on public.checklist_itens;
-drop policy if exists "checklist_cliente_read"  on public.checklist_itens;
+drop policy if exists "checklist_staff_all"           on public.checklist_itens;
+drop policy if exists "checklist_cliente_read"        on public.checklist_itens;
+drop policy if exists "checklist_staff_same_agencia"  on public.checklist_itens;
 
 create policy "checklist_staff_same_agencia"
   on public.checklist_itens for all
@@ -375,9 +384,10 @@ create policy "checklist_cliente_read"
 
 
 -- ---- aprovacoes -----------------------------------------------------------
-drop policy if exists "aprovacoes_staff_all"        on public.aprovacoes;
-drop policy if exists "aprovacoes_cliente_read"     on public.aprovacoes;
-drop policy if exists "aprovacoes_cliente_respond"  on public.aprovacoes;
+drop policy if exists "aprovacoes_staff_all"            on public.aprovacoes;
+drop policy if exists "aprovacoes_cliente_read"         on public.aprovacoes;
+drop policy if exists "aprovacoes_cliente_respond"     on public.aprovacoes;
+drop policy if exists "aprovacoes_staff_same_agencia"  on public.aprovacoes;
 
 create policy "aprovacoes_staff_same_agencia"
   on public.aprovacoes for all
@@ -439,7 +449,8 @@ create policy "aprovacoes_cliente_respond"
 
 
 -- ---- comentarios ----------------------------------------------------------
-drop policy if exists "comentarios_staff_all" on public.comentarios;
+drop policy if exists "comentarios_staff_all"           on public.comentarios;
+drop policy if exists "comentarios_staff_same_agencia"  on public.comentarios;
 
 create policy "comentarios_staff_same_agencia"
   on public.comentarios for all
@@ -467,8 +478,9 @@ create policy "comentarios_staff_same_agencia"
 
 
 -- ---- anexos ---------------------------------------------------------------
-drop policy if exists "anexos_staff_all"     on public.anexos;
-drop policy if exists "anexos_cliente_read"  on public.anexos;
+drop policy if exists "anexos_staff_all"           on public.anexos;
+drop policy if exists "anexos_cliente_read"        on public.anexos;
+drop policy if exists "anexos_staff_same_agencia"  on public.anexos;
 
 create policy "anexos_staff_same_agencia"
   on public.anexos for all
@@ -581,6 +593,8 @@ create index if not exists idx_convites_agencia on public.convites(agencia_id);
 create index if not exists idx_convites_token   on public.convites(token);
 
 alter table public.convites enable row level security;
+
+drop policy if exists "convites_admin_same_agencia" on public.convites;
 
 -- Admin da agência pode tudo com convites dela.
 create policy "convites_admin_same_agencia"
